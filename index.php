@@ -8,7 +8,7 @@ if(isset($_POST['content'])) {
 ?>
 <?php include('inc/head.php'); ?>
 
-    <h3>Folder tree:</h3>
+    <h3>Select the file you want to view/edit/delete:</h3>
     <ul>
         <?php
         $xfiles = scandir("files");
@@ -46,8 +46,14 @@ if(isset($_POST['content'])) {
 if (isset($_GET["f"])) :
 $file = "files/" . $_GET["f"];
 $content = file_get_contents($file);
+$edit = "submit";
 ?>
-    <h3>Edit selected file: <?= $_GET["f"];?></h3>
+    <h3>View/Edit selected file: <?= $_GET["f"];?></h3>
+    <?php
+        if (in_array(mime_content_type($file), array('image/jpg', 'image/jpeg'))) {
+            echo '<img class="img-responsive" src="'. $file . '" alt="'.$_GET["f"].'"> ' ;
+        }
+    ?>
     <form method="post" action="index.php">
         <div class="form-group">
             <textarea name="content" class="form-control textEdition">
@@ -55,6 +61,7 @@ $content = file_get_contents($file);
                 if (in_array(mime_content_type($file), array('text/plain', 'text/html'))) {
                     echo $content ;
                 } else {
+                    $edit = "hidden";
                     echo "Only text files can be edited (.txt/.html)";
                 }
                 ?>
@@ -62,7 +69,7 @@ $content = file_get_contents($file);
         </div>
         <input type="hidden" name="fileName" value="<?= $_GET["f"];?>" />
         <div class="form-group">
-            <button type="submit" class="btn btn-default">Edit</button>
+            <input type="<?= $edit;?>" class="btn btn-default" value="Edit">
         </div>
     </form>
 
@@ -88,7 +95,7 @@ $content = file_get_contents($file);
 
         <input type="hidden" name="fileName" value="<?= "files/" . $_GET["f"];?>" />
         <div class="form-group">
-            <input type="<?= $submit;?>" class="btn btn-info" value="Delete">
+            <input type="<?= $submit;?>" class="btn btn-danger" value="Delete">
         </div>
     </form>
 
