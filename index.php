@@ -80,11 +80,11 @@ $edit = "submit";
     if (isset($_GET["f"])) {
         $submit = "submit";
         if (is_dir("files/" . $_GET["f"])) {
-            if (!empty(scandir("files/" . $_GET["f"]))) {
+            if (count(scandir("files/" . $_GET["f"])) > 2) {
                 $submit = "hidden";
                 echo '<p>This directory is not empty and cannot be deleted: first delete every file in this directory</p>';
             } else {
-                echo '<p>' . $_GET["f"] .  'is an empty directory</p>';
+                echo '<p>' . $_GET["f"] .  ' is an empty directory</p>';
             }
         } else {
         echo '<p>By pressing the delete button, the selected file will be destroyed</p>';
