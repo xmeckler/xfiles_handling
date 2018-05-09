@@ -8,7 +8,7 @@ if(isset($_POST['content'])) {
 ?>
 <?php include('inc/head.php'); ?>
 
-    <h3>Select the file you want to view/edit/delete:</h3>
+    <h3>Select the file or directory you want to view/edit/delete:</h3>
     <ul>
         <?php
         $xfiles = scandir("files");
